@@ -63,7 +63,6 @@ You can influence what QA-Engine understands using @dialect annotations.
 	    When I GET http://google.com
 	    Then response code should be 200
 	
-	 @target=google
 	 Scenario: Request Google homepage - no redirect
 	
 	    Given I disable redirects
@@ -77,11 +76,11 @@ QA-Engine is built using NodeJS. If you're new to node, pre-read [Getting Starte
 
 You install QA-Engine as a system-wide CLI command:
 
-	$ npm install QA-Engine -g
+	$ npm install qa-engine-cli -g
 
 To run it simply type:
 
-	$ QA-Engine
+	$ qa
 
 However, It won't do much else until we provide some feature scenarios.
 
@@ -90,35 +89,17 @@ By default, QA-Engine looks for ".feature" files recursively, starting in the cu
 I want to create my first feature
 =================================
 
-1) To quickly create a few examples in the ./features folder, type:
-
-		$ QA-Engine --example
-
 This will create the ./features folder and copy some simple examples.
 
 It will also write your default configuration to ./QA-Engine.json
 
 It won't damage if you run it again, except re-save your ./QA-Engine.json config.
 
-Or, you can just create the ./features folder and a default "QA-Engine.json" without the examples:
+To execute your example ".feature" files, type:
 
-	$ QA-Engine --initialize
-
-2) To execute your example ".feature" files, type:
-
-		$ QA-Engine
-
-3) If something goes wrong, enable the built-in debugger.
-
-		$ export DEBUG=QA-Engine*
-		$ QA-Engine
-
-Now, the output is verbose and colour-coded to make your life easier.
-
-To turn off debugging, type:
-
-		$ export DEBUG=
-		$ QA-Engine
+```
+	qa
+```
 
 I want to learn some vocabulary
 ===============================
@@ -145,11 +126,7 @@ The "WHEN ... " steps do useful work that result in desirable outcomes. For exam
 
 In this example, we simply write a debug message to the console, so let's turn on debug output.
 
-	$ export DEBUG=QA-Engine*
-
-You can adjust the logging scope - to see only Web API messages, use: 
-
-	$ export DEBUG=QA-Engine:files
+	$ qa -v
 
 The "THEN ..." steps make assertions, that is they test that conditions are met. For example, you can use arbitrary Javascript if necessary:
 
@@ -162,7 +139,7 @@ I want to learn more about QA-Engine
 
 For runtime options, type:
 
-	$ QA-Engine  -h
+	$ qa  -h
  
 I want to organise my work into folders
 =======================================

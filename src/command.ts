@@ -24,7 +24,7 @@ export class QACommand extends Command {
         let qa = new QA();
         let options: any = {};
 
-        let folder = flags.folder;
+        let folder = flags.folder || "./features";
 
         // load scope from config file
         if (flags.config) {
@@ -36,21 +36,21 @@ export class QACommand extends Command {
         // emit progress
         if (flags.verbose) {
             qa.engine.bus.on("feature", (e) => {
-                console.log( chalk.yellow("feature: %s"), e.feature.title)
+                console.log( chalk.yellow("%s"), e.feature.title)
             });
             qa.engine.bus.on("scenario", (e) => {
-                console.log( chalk.green("scenario: %s -> %o").padStart(2), e.scenario.title, e.scenario.annotations)
+                console.log( chalk.green("  %s -> %o").padStart(2), e.scenario.title, e.scenario.annotations)
             });
         }
 
         if (flags.debug) {
             qa.engine.bus.on("step", (e) => {
-                console.log( chalk.white("step: %s").padStart(4), e.step)
+                console.log( chalk.white("    %s").padStart(4), e.step)
             });
         }
 
         qa.engine.bus.on("step:fail", (e) => {
-            console.log( chalk.red("step: %s").padStart(4), e.step)
+            console.log( chalk.red("    step: %s").padStart(4), e.step)
         });
 
         if (flags.target) {
@@ -61,7 +61,8 @@ export class QACommand extends Command {
         // execute test cases
         let scope = qa.engine.scope(options);
         qa.engine.read(scope, folder).then((_results: ResultSet) => {
-            flags.verbose && console.log( chalk.bold.green("QA Results: %o/ %o"), _results.total - _results.fails, _results.total);
+            flags.debug && console.log("---".repeat(10));
+            flags.verbose && console.log( chalk.bold.green("QA Results: %o / %o"), _results.total - _results.fails, _results.total);
             process.exit(_results.fails);
         }).catch((err: any) => {
             console.log( chalk.red("ERRORS! %o"), err);
