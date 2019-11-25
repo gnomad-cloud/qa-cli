@@ -1,7 +1,5 @@
 feature: 
-  title: 404: Page Not Found
-scenarios: 
-  title: 404
+scenario: 
   steps:
   - Given I enable redirects
   - When I GET http://localhost/404/not/found

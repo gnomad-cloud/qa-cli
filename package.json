@@ -4,10 +4,11 @@
   "description": "",
   "main": "lib/start.js",
   "scripts": {
+    "start": "tsc && bin/qa.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "qa": "./bin/qs.js"
+    "qa": "./bin/qa.js"
   },
   "files": [
     "/bin",
@@ -17,6 +18,6 @@
   "license": "ISC",
   "dependencies": {
     "@oclif/command": "^1.5.19",
-    "qa-engine": "^0.1.7"
+    "qa-engine": "^0.1.8"
   }
 }
