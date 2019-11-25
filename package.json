@@ -1,0 +1,22 @@
+{
+  "name": "qa-engine-cli",
+  "version": "0.0.1",
+  "description": "",
+  "main": "lib/start.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "qa": "./bin/qs.js"
+  },
+  "files": [
+    "/bin",
+    "/lib"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@oclif/command": "^1.5.19",
+    "qa-engine": "^0.1.7"
+  }
+}
