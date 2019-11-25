@@ -2,7 +2,8 @@ import { Command, flags } from "@oclif/command";
 export declare class QACommand extends Command {
     static description: string;
     static flags: {
-        version: import("@oclif/parser/lib/flags").IBooleanFlag<void>;
+        verbose: import("@oclif/parser/lib/flags").IBooleanFlag<boolean>;
+        debug: import("@oclif/parser/lib/flags").IBooleanFlag<boolean>;
         help: import("@oclif/parser/lib/flags").IBooleanFlag<void>;
         folder: flags.IOptionFlag<string>;
         config: flags.IOptionFlag<string>;
