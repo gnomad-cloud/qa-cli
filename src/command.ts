@@ -12,7 +12,7 @@ export class QACommand extends Command {
         verbose: flags.boolean({ char: "v", description: "verbose mode" }),
         debug: flags.boolean({ char: "d", description: "debug - show steps" }),
         help: flags.help({ char: "h" }),
-        // flag with a value (-n, --name=VALUE)
+        target: flags.string({ char: "t", description: "use a target from options.targets" }),
         folder: flags.string({ char: "f", description: "file/folder containing features" }),
         config: flags.string({ char: "c", description: "config file" })
     };
@@ -22,15 +22,18 @@ export class QACommand extends Command {
 
         args && true;
         let qa = new QA();
-        let options = {};
+        let options: any = {};
 
         let folder = flags.folder;
+
+        // load scope from config file
         if (flags.config) {
             Converters.json_or_yaml (flags.config, (_err, json) => {
                 options = json;
             });
         }
 
+        // emit progress
         if (flags.verbose) {
             qa.engine.bus.on("feature", (e) => {
                 console.log( chalk.yellow("feature: %s"), e.feature.title)
@@ -50,15 +53,18 @@ export class QACommand extends Command {
             console.log( chalk.red("step: %s").padStart(4), e.step)
         });
 
-        let scope = qa.engine.scope(options);
-        qa.engine.read(scope, folder)
-            .then((_results: ResultSet) => {
-                flags.verbose && console.log( chalk.bold.green("test results: %o / %o"), _results.total - _results.fails, _results.total);
+        if (flags.target) {
+            options.targets = options.targets || {};
+            options.target = options.targets[flags.target];
+        }
 
-                process.exit(_results.fails);
-            })
-            .catch((err: any) => {
-                console.log( chalk.red("ERRORS! %o"), err);
-            });
+        // execute test cases
+        let scope = qa.engine.scope(options);
+        qa.engine.read(scope, folder).then((_results: ResultSet) => {
+            flags.verbose && console.log( chalk.bold.green("QA Results: %o/ %o"), _results.total - _results.fails, _results.total);
+            process.exit(_results.fails);
+        }).catch((err: any) => {
+            console.log( chalk.red("ERRORS! %o"), err);
+        });
     }
 }

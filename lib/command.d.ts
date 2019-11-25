@@ -5,6 +5,7 @@ export declare class QACommand extends Command {
         verbose: import("@oclif/parser/lib/flags").IBooleanFlag<boolean>;
         debug: import("@oclif/parser/lib/flags").IBooleanFlag<boolean>;
         help: import("@oclif/parser/lib/flags").IBooleanFlag<void>;
+        target: flags.IOptionFlag<string>;
         folder: flags.IOptionFlag<string>;
         config: flags.IOptionFlag<string>;
     };
