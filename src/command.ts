@@ -3,6 +3,7 @@ import { QA } from "./qa";
 import { ResultSet, Converters  } from "qa-engine";
 import chalk from "chalk";
 import * as _ from "lodash";
+// let debug = require("debug")("qa:cli");
 
 export class QACommand extends Command {
     static description = "Execute test cases";
@@ -36,21 +37,21 @@ export class QACommand extends Command {
         // emit progress
         if (flags.verbose) {
             qa.engine.bus.on("feature", (e) => {
-                console.log( chalk.yellow("%s"), e.feature.title)
+                console.log( chalk.yellow("Feature: %s"), e.feature.title)
             });
             qa.engine.bus.on("scenario", (e) => {
-                console.log( chalk.green("  %s -> %o").padStart(2), e.scenario.title, e.scenario.annotations)
+                console.log( chalk.yellow("Scenario: %s (%s steps)").padStart(2), e.scenario.title, e.scenario.steps.length)
             });
         }
 
         if (flags.debug) {
             qa.engine.bus.on("step", (e) => {
-                console.log( chalk.white("    %s").padStart(4), e.step)
+                console.log( chalk.white("step: %s").padStart(4), e.step)
             });
         }
 
         qa.engine.bus.on("step:fail", (e) => {
-            console.log( chalk.red("    step: %s").padStart(4), e.step)
+            console.log( chalk.red("step:fail: %s").padStart(4), e.step)
         });
 
         if (flags.target) {
@@ -60,12 +61,25 @@ export class QACommand extends Command {
 
         // execute test cases
         let scope = qa.engine.scope(options);
+        // let running = true;
+
         qa.engine.read(scope, folder).then((_results: ResultSet) => {
             flags.debug && console.log("---".repeat(10));
-            flags.verbose && console.log( chalk.bold.green("QA Results: %o / %o"), _results.total - _results.fails, _results.total);
+            flags.verbose && console.log( chalk.bold.green("completed: %o / %o"), _results.total - _results.fails, _results.total);
+            // running = false;
             process.exit(_results.fails);
         }).catch((err: any) => {
-            console.log( chalk.red("ERRORS! %o"), err);
+            console.log( chalk.red("failed %o"), err);
+            process.exit(1);
+            // running = false;
         });
+
+        // setInterval( ()=> {
+        //     console.log("running ...")
+        //     if (!running) {
+        //         process.exit(1);
+        //     }
+
+        // }, 1000);
     }
 }

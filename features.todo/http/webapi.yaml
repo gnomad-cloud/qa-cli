@@ -1,4 +1,5 @@
-feature: 
+feature:
+  title: Local redirect
 scenario: 
   steps:
   - Given I enable redirects
