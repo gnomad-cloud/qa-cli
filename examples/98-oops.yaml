@@ -1,0 +1,6 @@
+feature:
+  title: Goodbye World #00
+scenarios:
+  - title: L8R Aligator
+    steps:
+      - then I pass

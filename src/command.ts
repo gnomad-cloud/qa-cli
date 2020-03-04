@@ -59,27 +59,18 @@ export class QACommand extends Command {
             options.target = options.targets[flags.target];
         }
 
-        // execute test cases
+        // configuration for tests
         let scope = qa.engine.scope(options);
-        // let running = true;
 
+        // execute test cases
         qa.engine.read(scope, folder).then((_results: ResultSet) => {
             flags.debug && console.log("---".repeat(10));
             flags.verbose && console.log( chalk.bold.green("completed: %o / %o"), _results.total - _results.fails, _results.total);
-            // running = false;
             process.exit(_results.fails);
         }).catch((err: any) => {
             console.log( chalk.red("failed %o"), err);
             process.exit(1);
-            // running = false;
         });
 
-        // setInterval( ()=> {
-        //     console.log("running ...")
-        //     if (!running) {
-        //         process.exit(1);
-        //     }
-
-        // }, 1000);
     }
 }

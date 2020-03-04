@@ -19,6 +19,6 @@
   "dependencies": {
     "@oclif/command": "^1.5.19",
     "chalk": "^3.0.0",
-    "qa-engine": "^0.3.0"
+    "qa-engine": "^0.3.1"
   }
 }

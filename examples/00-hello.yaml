@@ -1,0 +1,6 @@
+feature:
+  title: Test Fail 
+scenarios:
+  - title: Testing failure
+    steps:
+      - then I fail
