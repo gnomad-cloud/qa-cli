@@ -101,14 +101,19 @@ To execute your example ".feature" files, type:
 	qa
 ```
 
-I want to learn some vocabulary
+I want to learn more about QA-Engine
+====================================
+
+For runtime options, type:
+
+	$ qa  -h
+ 
+For a list of [supported phrases](PHRASES.md), type:
+
+	$ qa  -p
+
+I want to write some examples
 ===============================
-
-QA-Engine ships with few default vocabularies - variables, files, web apis, web apps, etc. 
-
-To discover what phrases exist in the vocabularies, type:
-
-	$ QA-Engine --knows
 
 Let's create a trivial example of a hypothetical test case.
 
@@ -134,13 +139,6 @@ The "THEN ..." steps make assertions, that is they test that conditions are met.
 
 The "I succeed", "I pass" always meet their conditions. The inverse "I fail" forces the scenario to abort and report it's failure.
 
-I want to learn more about QA-Engine
-============================================
-
-For runtime options, type:
-
-	$ qa  -h
- 
 I want to organise my work into folders
 =======================================
 
@@ -163,7 +161,7 @@ Most Dialects configure themselves automatically.
 
 If yours doesn't then there is alternative - use {{mustache}} templates to modify statements prior to execution.
 
-	Given I login as {{scope.actor}}
+	Given I login as {{actor}}
 
 In this way, your BDD features are neatly abstracted from your runtime configuration.
 
@@ -174,19 +172,6 @@ To specify a runtime configuration for your features, type:
 By default, QA-Engine will try to load a configuration file called "QA-Engine.json" from your current directory. 
 
 If no file is found, then sensible default values are defined.
-
-I want to do something before every scenario
-=============================================
-
-Backgrounds are similar to scenarios, except they do not support annotations.
-
-Any feature can contain a background, in which case the steps that carried out before each scenario.
-
-```
-	Background: Authenticate
-	GIVEN I login
-	AND I use a valid client certificate
-```
 
 I want to know how it works
 ===========================
@@ -223,16 +208,6 @@ Simple, place a # before any line and it will be ignored by QA-Engine.
 		# Then I fail
 		Then I succeed
 ```
-
-Instead, you should use @skip or @todo before a Feature: or Scenario: definition.
- 
-An @bug scenario will pass normally (skipped) but fail when --debug is used.
-
-	@bug=something is broken
-
-	Scenario: A Bug
-		Given I am a bug
-		Then I fail
 
 I want to use QA-Engine
 ================================
