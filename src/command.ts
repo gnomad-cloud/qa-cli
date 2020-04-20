@@ -47,8 +47,10 @@ export class QACommand extends Command {
 
         // load scope from config file
         if (flags.phrases) {
+            console.log( chalk.blueBright("# Built-in phrases"))
+            console.log( chalk.grey("These can be re-generated using `qa -p` "))
             _.each(qa.engine.getDocs(), doc => {
-                console.log( chalk.blueBright("%s"),doc.description)
+                console.log( chalk.blueBright("\n## %s"),doc.description)
                 doc.phrases.forEach(phrase => {
                     if (phrase.indexOf("\n")>0) phrase = phrase.replace("\n", "\n\t...")+"\n"
                     console.log( chalk.gray("\t%s"), phrase )
