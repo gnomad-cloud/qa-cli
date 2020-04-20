@@ -55,12 +55,7 @@ export class QACommand extends Command {
                     if (phrase.indexOf("\n")>0) phrase = phrase.replace("\n", "\n\t...")+"\n"
                     console.log( chalk.gray("\t%s"), phrase )
                 });
-        })
-            // qa.engine.getDocs().forEach( doc => {
-            //     // doc.phrases.forEach(phrase => {
-            //     //     console.log( chalk.green("%s"), phrase)
-            //     // });
-            // })
+            })
             return Promise.reject(0);
         }
         
