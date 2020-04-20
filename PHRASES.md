@@ -8,8 +8,6 @@ These can be re-generated using `qa -p`
 
 ## Deliberately fail
 	I fail
-
-## Deliberately fail - with custom error
 	I fail with $msg
 
 ## Do nothing / pass
@@ -108,12 +106,12 @@ These can be re-generated using `qa -p`
 	any $path in $varname should match $regex
 	any $path in $varname must match $regex
 	any $path in $varname matches $regex
-	I merge $varnames as $newvar
-	I merge $varnames into $newvar
-	I transform $varname as $newvar with:
+	I merge $varnames as $varname2
+	I merge $varnames into $varname2
+	I transform $varname as $varname2 with:
 	...$javascript
 
-	I map $varname as $newvar with:
+	I map $varname as $varname2 with:
 	...$javascript
 
 	I set $varname to JSON:
@@ -268,7 +266,7 @@ These can be re-generated using `qa -p`
 	header $header should exist
 	header $header should not exist
 
-## HTTP headers
+## Set HTTP header values
 	I set $header header to $value
 	I set header $header = $value
 	I set $header header from $varname
