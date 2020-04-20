@@ -1,15 +1,15 @@
 # QA-Engine - Gherkin / BDD Test Automation
 ==============================
 
-QA-Engine is an BDD test automation and orchestration tool for software teams. 
+QA-Engine uses the English language to describe executable test cases - particularly for web apps and APIs. 
 
-QA-Engine uses English (Gherkin) language to describe and execute test cases for APIs and Web Apps. 
-
-Test definitions are declarative - which makes them easy to read, write and re-use.
+QA-Engine supports a BDD/Gherkin syntax with many useful built-in phrases. You see them [here](PHRASES.md) 
 
 Gherkin is human and machine readable - so business analysts, testers, developers and robots can collaborate.
 
-Since tests are written in English - every stakeholder can make sense of them.
+Since tests are written in English - almost every stakeholder can make sense of them.
+
+Each test is defined using declarative style, meaning you say what you want it to, but not how to do it. 
 
 I want to automate testing
 ==========================
@@ -72,7 +72,7 @@ You can influence what QA-Engine understands using @dialect annotations.
 I want to test-drive QA-Engine
 ======================================
 
-QA-Engine is built using NodeJS. If you're new to node, pre-read [Getting Started](https://www.npmjs.com/package/QA-Engine/tutorial).
+QA-Engine is built using NodeJS. 
 
 You install QA-Engine as a system-wide CLI command:
 
@@ -239,7 +239,7 @@ I want to use QA-Engine
 
 This software is licensed under the Apache 2 license, quoted below.
 
-Copyright Troven 2009-2016
+Copyright &copy Troven 2009-2020
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not
 use this file except in compliance with the License. You may obtain a copy of
