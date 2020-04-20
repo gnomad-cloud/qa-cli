@@ -13,12 +13,30 @@ export class QACommand extends Command {
         verbose: flags.boolean({ char: "v", description: "verbose mode" }),
         debug: flags.boolean({ char: "d", description: "debug - show steps" }),
         help: flags.help({ char: "h" }),
+        phrases: flags.boolean({ char: "p", description: "show known phrases" }),
         target: flags.string({ char: "t", description: "use a target from options.targets" }),
         folder: flags.string({ char: "f", description: "file/folder containing features" }),
         config: flags.string({ char: "c", description: "config file" })
     };
 
+    constructor(argv:[], config: any){
+        super(argv, config);
+    }
+
     async run() {
+        try {
+            this.handle().then( ()=>{
+//            console.error("FAILED: %j", e);
+            }).catch( (_err) =>{
+//            console.error("FAILED: %j", e);
+            });
+        } catch(e) {
+//            console.error("FAILED: %j", e);
+        }
+    }
+
+    handle():Promise<number> {
+
         const { args, flags } = this.parse(QACommand);
 
         args && true;
@@ -27,6 +45,23 @@ export class QACommand extends Command {
 
         let folder = flags.folder || "./features";
 
+        // load scope from config file
+        if (flags.phrases) {
+            _.each(qa.engine.getDocs(), doc => {
+                console.log( chalk.blueBright("%s"),doc.description)
+                doc.phrases.forEach(phrase => {
+                    if (phrase.indexOf("\n")>0) phrase = phrase.replace("\n", "\n\t...")+"\n"
+                    console.log( chalk.gray("\t%s"), phrase )
+                });
+        })
+            // qa.engine.getDocs().forEach( doc => {
+            //     // doc.phrases.forEach(phrase => {
+            //     //     console.log( chalk.green("%s"), phrase)
+            //     // });
+            // })
+            return Promise.reject(0);
+        }
+        
         // load scope from config file
         if (flags.config) {
             Converters.json_or_yaml (flags.config, (_err, json) => {
@@ -40,18 +75,18 @@ export class QACommand extends Command {
                 console.log( chalk.yellow("Feature: %s"), e.feature.title)
             });
             qa.engine.bus.on("scenario", (e) => {
-                console.log( chalk.yellow("Scenario: %s (%s steps)").padStart(2), e.scenario.title, e.scenario.steps.length)
+                console.log( chalk.yellow("Scenario: %s (%s steps)"), e.scenario.title, e.scenario.steps.length)
             });
         }
 
         if (flags.debug) {
             qa.engine.bus.on("step", (e) => {
-                console.log( chalk.white("step: %s").padStart(4), e.step)
+                console.log( chalk.white("step: %s"), e.step)
             });
         }
 
         qa.engine.bus.on("step:fail", (e) => {
-            console.log( chalk.red("step:fail: %s").padStart(4), e.step)
+            console.log( chalk.red("step:fail: %s"), e.step)
         });
 
         if (flags.target) {
@@ -62,15 +97,19 @@ export class QACommand extends Command {
         // configuration for tests
         let scope = qa.engine.scope(options);
 
-        // execute test cases
-        qa.engine.read(scope, folder).then((_results: ResultSet) => {
-            flags.debug && console.log("---".repeat(10));
-            flags.verbose && console.log( chalk.bold.green("completed: %o / %o"), _results.total - _results.fails, _results.total);
-            process.exit(_results.fails);
-        }).catch((err: any) => {
-            console.log( chalk.red("failed %o"), err);
-            process.exit(1);
-        });
+        return new Promise( (resolve, reject) => {
+            // execute test cases
+            qa.engine.read(scope, folder).then((_results: ResultSet) => {
+                flags.debug && console.log("---".repeat(10));
+                flags.verbose && console.log( chalk.bold.green("completed: %o / %o"), _results.total - _results.fails, _results.total);
+    //            process.exit(_results.fails);
+                resolve(0);
+            }).catch((err: any) => {
+                console.log( chalk.red("failed %o"), err);
+    //            process.exit(1);
+                reject(1);
+            });
 
+        })
     }
 }

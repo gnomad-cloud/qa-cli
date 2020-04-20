@@ -10,7 +10,6 @@ export class QA {
     constructor() {
         this.engine = new Engine({ started: Date.now() });
 
-        new X509Dialect(this.engine);
         new CommonDialect(this.engine);
         new FilesDialect(this.engine);
         new ProcessesDialect(this.engine);
@@ -18,6 +17,7 @@ export class QA {
         new TCPDialect(this.engine);
         new VarsDialect(this.engine);
         new WebAPIDialect(this.engine);
+        new X509Dialect(this.engine);
     
     }
 
