@@ -20,6 +20,6 @@
     "@oclif/command": "^1.5.19",
     "chalk": "^3.0.0",
     "lodash": "^4.17.15",
-    "qa-engine": "^0.3.3"
+    "qa-engine": "^0.3.4"
   }
 }
