@@ -273,3 +273,9 @@ These can be re-generated using `qa -p`
 	I set header $header from $varname
 
 ## Test HTTP body for values
+	/^response body should be valid (xml|json)$/
+	/^response body should not be valid (xml|json)$/
+	response body should contain $expression
+	response body should not contain $expression
+	/^response body path (.*) should exist/
+	/^response body path (.*) should not exist/
